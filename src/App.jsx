@@ -29,21 +29,36 @@ function App() {
       return {
         ...prevState,
         projects: [...prevState.projects, newProject],
+        selectedProjectId: undefined,
       };
+    });
+  }
+
+  function handleCancelProject() {
+    setProjectsState((prevState) => {
+      return { ...prevState, selectedProjectId: undefined };
     });
   }
 
   if (projectsState.selectedProjectId === undefined) {
     content = <NoProjectSelected addProject={handleAddNewProject} />;
   } else if (projectsState.selectedProjectId === null) {
-    content = <NewProject onAdd={handleAddProject} />;
+    content = (
+      <NewProject
+        onAdd={handleAddProject}
+        cancelProject={handleCancelProject}
+      />
+    );
   }
 
   console.log(projectsState);
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar addProject={handleAddNewProject} />
+      <ProjectsSidebar
+        addProject={handleAddNewProject}
+        projects={projectsState.projects}
+      />
       {content}
     </main>
   );
