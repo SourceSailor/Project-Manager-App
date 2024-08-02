@@ -60,6 +60,9 @@ function App() {
         projects: prevState.projects.filter(
           (project) => project.id !== projectsState.selectedProjectId
         ),
+        tasks: prevState.tasks.filter(
+          (task) => task.projectId !== prevState.selectedProjectId
+        ),
       };
     });
   }
